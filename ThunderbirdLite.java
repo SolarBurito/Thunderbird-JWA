@@ -32,7 +32,6 @@ import java.awt.Font;
 import java.util.ArrayList;
 
 class ContactTile extends JPanel {
-    private int red, green, blue;
     private ThunderbirdContact contactInSeat = null;
 
     private Boolean isAnAisle = false;
@@ -43,20 +42,14 @@ class ContactTile extends JPanel {
 
         // Todo: Remove everything to do with random colors.
         // Todo: Implement visually appealing colors for aisles and seats.
-        SetRandomValues();
+        // JWA - Removed Random colors
     }
 
     ContactTile(ThunderbirdContact contactInSeatIn) {
         super();
-        SetRandomValues();
         contactInSeat = contactInSeatIn;
     }
 
-    final public void SetRandomValues() {
-        red = GetNumberBetween(0,255);
-        green = GetNumberBetween(0,255);
-        blue = GetNumberBetween(0,255);
-    }
 
     private static int GetNumberBetween(int min, int max) {
         Random myRandom = new Random();
@@ -69,15 +62,17 @@ class ContactTile extends JPanel {
         int panelWidth = getWidth();
         int panelHeight = getHeight();
 
+        g.setColor(new Color (0,0,0));
+
+        g.fillRect(10,10,panelWidth-10,panelHeight-10);
+
         if (isAnAisle) {
-            g.setColor(new Color(0,0,0));
+        	g.setColor(new Color(100,100,100));
         } else {
-            g.setColor(new Color(red,green,blue));
+        	g.setColor(new Color(200,200,200));
+
         }
         
-        g.fillRect (10, 10, panelWidth-20, panelHeight-20);
-
-        g.setColor(new Color(GetContrastingColor(red),GetContrastingColor(green),GetContrastingColor(blue)));
 
         final int fontSize=18;
         g.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
@@ -87,12 +82,9 @@ class ContactTile extends JPanel {
 
             // ToDo: Dispay preferred name instead of first and last name. 
             String firstAndLastName = contactInSeat.getFirstName()+" "+contactInSeat.getLastName();
-            g.drawString(firstAndLastName,stringX,stringY);
+            String preferredName = contactInSeat.getPreferredName();
+            g.drawString(preferredName,stringX,stringY);
         }
-    }
-
-    private static int GetContrastingColor(int colorIn) {
-        return ((colorIn+128)%256);
     }
 }
 
@@ -121,7 +113,7 @@ class ThunderbirdLiteFrame extends JFrame implements ActionListener {
 
         ThunderbirdModel tbM = new ThunderbirdModel();
         tbM.LoadIndex();
-        tbM.LoadContacts();
+        tbM.LoadContactsThreaded();
 
         // Todo: Review ThunderbirdModel in detail and implement a multithreaded version of loading contacts. 
         // Hint: Review LoadContact() and LoadContactsThreaded() in detail.
@@ -155,7 +147,6 @@ class ThunderbirdLiteFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         for(ContactTile tile : tileList) {
             // Todo: Remove randomization functionality and implement a visually appealing view of seats and aisles.
-            tile.SetRandomValues();
 
             // Todo: Implement reverse view where it looks like you are looking at the room from the back instead of the front 
             //     of the room. 
