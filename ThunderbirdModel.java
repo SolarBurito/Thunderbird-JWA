@@ -15,7 +15,7 @@ class ThunderbirdModel extends HttpRequest {
     // Hint: Consider using "https://thunderbird-data.azurewebsites.net/url-list.json"
     // JWA: Updated indexURL
 
-    private String indexURL = "https://thunderbird-data.azurewebsites.net/url-list.json";
+    private String indexURL = "https://thunderbird-index.azurewebsites.net/w0a6zk195d.json";
     
     private ArrayList<ThunderbirdContact> contactList;
 

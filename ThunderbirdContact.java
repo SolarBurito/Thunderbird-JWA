@@ -10,16 +10,17 @@
 
 class ThunderbirdContact extends HttpRequest implements Runnable {
     private String firstName;
-    public String getFirstName() { return Integer.toString(seatLocation) + " " + firstName; }
+    public String getFirstName() { return firstName; }
 
     private String lastName;
     public String getLastName() {return lastName; }
 
     private String preferredName;
-    public String getPreferredName(){return Integer.toString(seatLocation) + " " + preferredName;}
+    public String getPreferredName(){return preferredName;}
     
     private int seatLocation; 
     public int getSeat() { return (seatLocation-1); }
+    public void flipSeat() {seatLocation = 99 - seatLocation;}
 
     ThunderbirdContact(String urlIn) {
         super(urlIn);
